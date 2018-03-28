@@ -1,0 +1,35 @@
+version: '3'
+services:
+    sampleapplication-app:
+        image: lab4.southeastasia.cloudapp.azure.com/sampleapplication
+        deploy:
+            replicas: 6
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://50.17.161.139:3306/sampleapplication?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=50 # gives time for the database to boot before the application
+        ports:
+            - 80:8080
+    sampleapplication-mysql:
+        image: mysql:5.7.18
+        environment:
+            - MYSQL_USER=root
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=sampleapplication
+        ports:
+            - 3306:3306
+        command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 --explicit_defaults_for_timestamp
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+            restart_policy:
+                condition: on-failure
+    visualizer:
+        image: dockersamples/visualizer:stable
+        ports:
+            - 9001:8080
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+        deploy:
+            placement:
+                constraints: [node.role == manager]
