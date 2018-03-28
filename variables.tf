@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "ami" {
   description = "Amazon Linux AMI"
-  default = "ami-4fffc834"
+  default = "ami-43a15f3e"
 }
 
 variable "instance_type" {
@@ -31,13 +31,13 @@ variable "bootstrap_path" {
 }
 
 variable "master_public_ip" {
-  default = "50.17.161.139"
+  default = "35.168.203.14"
 }
 
 variable "worker1_public_ip" {
-  default = "34.236.181.148"
+  default = "35.172.249.241"
 }
 
 variable "worker2_public_ip" {
-  default = "34.228.33.92"
+  default = "18.233.41.155"
 }

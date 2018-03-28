@@ -1,9 +1,11 @@
 #!/bin/bash
 
-ssh-keygen -f ~/.ssh/known_hosts -R 50.17.161.139
-ssh-keygen -f ~/.ssh/known_hosts -R 34.236.181.148
-ssh-keygen -f ~/.ssh/known_hosts -R 34.228.33.92
+ssh-keygen -f ~/.ssh/known_hosts -R 35.168.203.14
+ssh-keygen -f ~/.ssh/known_hosts -R 35.172.249.241
+ssh-keygen -f ~/.ssh/known_hosts -R 18.233.41.155
 
-ssh-keyscan -H  50.17.161.139 >>  ~/.ssh/known_hosts
-ssh-keyscan -H 34.236.181.148 >>  ~/.ssh/known_hosts
-ssh-keyscan -H 34.228.33.92 >>  ~/.ssh/known_hosts
+ssh-keyscan -H  35.168.203.14 >>  ~/.ssh/known_hosts
+ssh-keyscan -H 35.172.249.241 >>  ~/.ssh/known_hosts
+ssh-keyscan -H 18.233.41.155 >>  ~/.ssh/known_hosts
+
+echo "$PBPASS" > `pwd`/my_password.txt

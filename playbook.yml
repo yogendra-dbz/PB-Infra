@@ -2,7 +2,7 @@
   - name: Init Swarm Master
     hosts: masters
     gather_facts: False
-    remote_user: ec2-user
+    remote_user: ubuntu
     become: true
     tasks:
       - name: determine swarm status
@@ -29,7 +29,7 @@
 
   - name: Join Swarm Cluster
     hosts: workers
-    remote_user: ec2-user
+    remote_user: ubuntu
     gather_facts: False
     become: true
     vars:
@@ -56,7 +56,7 @@
     
   - name: copy app compose file on masters
     hosts: masters
-    remote_user: ec2-user
+    remote_user: ubuntu
     gather_facts: False
     vars:
       user: "ec2-user"
@@ -67,10 +67,15 @@
           src: "{{playbook_dir}}/app.yml"
           dest: "/home/{{user}}/docker-compose.yml"
           mode: 0755
-        
+      
+      - name: copy password
+          src: "{{playbook_dir}}/my_password.txt"
+          dest: "/root/my_password.txt"
+          mode: 0755
+          
       - name: Launch stack
         shell: >
-          cd /home/{{user}}; docker stack deploy --compose-file docker-compose.yml sampleapp
+          cd /home/{{user}}; cat /root/my_password.txt | docker login lab4.southeastasia.cloudapp.azure.com --username PBuser --password-stdin; docker stack deploy --compose-file docker-compose.yml shoppingcart
         register: swam-stack
 
       - name: Show Results

@@ -2,7 +2,7 @@
   - name: Init Swarm Master
     hosts: masters
     gather_facts: False
-    remote_user: ec2-user
+    remote_user: ubuntu
     become: true
     tasks:
       - name: determine swarm status
@@ -11,7 +11,7 @@
         register: swarm_status
       
       - name: Swarm rolling update
-        command: docker service update --image lab4.southeastasia.cloudapp.azure.com/sampleapplication:latest --update-order start-first --update-delay 25s sampleapp_sampleapplication-app --detach=false --force
+        command: docker service update --image lab4.southeastasia.cloudapp.azure.com/shoppingcart:latest --update-order start-first --update-delay 25s shoppingcart_shoppingcart-app --detach=false --force
         register: swamrollingupdate
 
       - name: Show Results
