@@ -1,21 +1,20 @@
 version: '3'
 services:
-    sampleapplication-app:
-        image: lab4.southeastasia.cloudapp.azure.com/sampleapplication
+    shoppingcart-app:
+        image: lab4.southeastasia.cloudapp.azure.com/shoppingcart
         deploy:
             replicas: 6
         environment:
-            - SPRING_PROFILES_ACTIVE=prod,swagger
-            - SPRING_DATASOURCE_URL=jdbc:mysql://50.17.161.139:3306/sampleapplication?useUnicode=true&characterEncoding=utf8&useSSL=false
-            - JHIPSTER_SLEEP=50 # gives time for the database to boot before the application
+            - SPRING_DATASOURCE_URL=jdbc:mysql://35.168.203.14:3306/shopping_cart_db?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - APP_SLEEP=50 # gives time for the database to boot before the application
         ports:
             - 80:8080
-    sampleapplication-mysql:
+    shoppingcart-mysql:
         image: mysql:5.7.18
         environment:
             - MYSQL_USER=root
             - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-            - MYSQL_DATABASE=sampleapplication
+            - MYSQL_DATABASE=shopping_cart_db
         ports:
             - 3306:3306
         command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 --explicit_defaults_for_timestamp
