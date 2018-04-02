@@ -69,6 +69,7 @@
           mode: 0755
       
       - name: copy password
+        copy:
           src: "{{playbook_dir}}/my_password.txt"
           dest: "/root/my_password.txt"
           mode: 0755
