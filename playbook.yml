@@ -39,6 +39,9 @@
       token: "{{ hostvars[groups['masters'][0]]['worker_token']['stdout'] }}"
       master: "{{ hostvars[groups['masters'][0]]['inventory_hostname'] }}"
     tasks:
+      - name: install python 2
+        raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+        
       - name: determine swarm status
         shell: >
             docker info | egrep '^Swarm: ' | cut -d ' ' -f2
