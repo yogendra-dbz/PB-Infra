@@ -5,6 +5,9 @@
     remote_user: ubuntu
     become: true
     tasks:
+      - name: install python 2
+        raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+        
       - name: determine swarm status
         shell: >
             docker info | egrep '^Swarm: ' | cut -d ' ' -f2
