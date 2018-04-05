@@ -5,17 +5,17 @@ variable "aws_region" {
 
 variable "ami-master" {
   description = "Amazon Linux AMI"
-  default = "ami-ce3f93b3"
+  default = "ami-1af25c67"
 }
 
 variable "ami-worker1" {
   description = "Amazon Linux AMI"
-  default = "ami-10379b6d"
+  default = "ami-35cc6248"
 }
 
 variable "ami-worker2" {
   description = "Amazon Linux AMI"
-  default = "ami-d33498ae"
+  default = "ami-e0f05e9d"
 }
 
 variable "ami-web" {
