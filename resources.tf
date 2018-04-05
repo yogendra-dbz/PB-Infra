@@ -4,7 +4,7 @@ resource "aws_key_pair" "default"{
 }
 
 resource "aws_instance" "master" {
-  ami = "${var.ami}"
+  ami = "${var.ami-master}"
   instance_type = "${var.instance_type}"
   key_name = "${aws_key_pair.default.id}"
   user_data = "${file("${var.bootstrap_path}")}"
@@ -32,7 +32,7 @@ resource "aws_eip_association" "master_eip" {
 
 
 resource "aws_instance" "worker1" {
-  ami = "${var.ami}"
+  ami = "${var.ami-worker1}"
   instance_type = "${var.instance_type}"
   key_name = "${aws_key_pair.default.id}"
   user_data = "${file("${var.bootstrap_path}")}"
@@ -60,7 +60,7 @@ resource "aws_eip_association" "worker1_eip" {
 
 
 resource "aws_instance" "worker2" {
-  ami = "${var.ami}"
+  ami = "${var.ami-worker2}"
   instance_type = "${var.instance_type}"
   key_name = "${aws_key_pair.default.id}"
   user_data = "${file("${var.bootstrap_path}")}"
@@ -87,6 +87,34 @@ resource "aws_eip_association" "worker2_eip" {
   allocation_id = "${data.aws_eip.worker2_ip.id}"
 }
 
+resource "aws_instance" "web" {
+  ami = "${var.ami-web}"
+  instance_type = "${var.instance_type}"
+  key_name = "${aws_key_pair.default.id}"
+  vpc_security_group_ids = ["${aws_security_group.default.id}"]
+
+  tags {
+    Name  = "web"
+  }
+  
+  depends_on = ["aws_instance.master","aws_instance.worker1","aws_instance.worker2"]
+  
+  provisioner "local-exec" {
+    command = "sleep 120"
+  }
+  
+}
+
+data "aws_eip" "web_ip" {
+  public_ip = "${var.web_public_ip}"
+}
+
+resource "aws_eip_association" "web_eip" {
+  instance_id   = "${aws_instance.web.id}"
+  allocation_id = "${data.aws_eip.web_ip.id}"
+}
+
+
 output "Mip" {
   value = ["${aws_instance.master.*.public_dns}"]
 }
@@ -97,6 +125,10 @@ output "W1ip" {
 
 output "W2ip" {
   value = ["${aws_instance.worker2.*.public_dns}"]
+}
+
+output "Webip" {
+  value = ["${aws_instance.web.*.public_dns}"]
 }
 
 resource "null_resource" "ansible" {
