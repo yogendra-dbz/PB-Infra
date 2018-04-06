@@ -132,7 +132,7 @@ output "Webip" {
 }
 
 resource "null_resource" "ansible" {
-  depends_on = ["aws_instance.worker2"]
+  depends_on = ["aws_instance.web"]
   
   provisioner "local-exec" {
     command = "sleep 10 && chmod +x AddRemoveSSHKey.sh && chown jenkins:jenkins ~/.ssh/known_hosts  &&  ./AddRemoveSSHKey.sh "
