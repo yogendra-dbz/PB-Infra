@@ -82,7 +82,7 @@
           
       - name: Launch stack
         shell: >
-          cd /home/{{user}}; cat /root/my_password.txt | docker login lab4.southeastasia.cloudapp.azure.com --username PBuser --password-stdin; docker stack deploy --compose-file docker-compose.yml sampleapp
+          cd /home/{{user}}; cat my_password.txt | docker login lab4.southeastasia.cloudapp.azure.com --username PBuser --password-stdin; docker stack deploy --compose-file docker-compose.yml sampleapp
         register: swam-stack
 
       - name: Show Results
