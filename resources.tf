@@ -11,7 +11,7 @@ resource "aws_instance" "master" {
   vpc_security_group_ids = ["${aws_security_group.default.id}"]
 
   tags {
-    Name  = "master"
+    Name  = "Terraform-master"
   }
   
   provisioner "local-exec" {
@@ -39,7 +39,7 @@ resource "aws_instance" "worker1" {
   vpc_security_group_ids = ["${aws_security_group.default.id}"]
 
   tags {
-    Name  = "worker 1"
+    Name  = "Terraform-worker1"
   }
   
   depends_on = ["aws_instance.master"]
@@ -67,7 +67,7 @@ resource "aws_instance" "worker2" {
   vpc_security_group_ids = ["${aws_security_group.default.id}"]
 
   tags {
-    Name  = "worker 2"
+    Name  = "Terraform-worker2"
   }
   
   depends_on = ["aws_instance.master","aws_instance.worker1"]
@@ -94,7 +94,7 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = ["${aws_security_group.default.id}"]
 
   tags {
-    Name  = "web"
+    Name  = "Terraform-web"
   }
   
   depends_on = ["aws_instance.master","aws_instance.worker1","aws_instance.worker2"]
