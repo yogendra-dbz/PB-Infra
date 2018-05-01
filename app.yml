@@ -6,7 +6,7 @@ services:
             replicas: 6
         environment:
             - SPRING_PROFILES_ACTIVE=prod,swagger
-            - SPRING_DATASOURCE_URL=jdbc:mysql://35.168.203.14:3306/sampleapplication?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - SPRING_DATASOURCE_URL=jdbc:mysql://18.208.27.151:3306/sampleapplication?useUnicode=true&characterEncoding=utf8&useSSL=false
             - JHIPSTER_SLEEP=50 # gives time for the database to boot before the application
         ports:
             - 8080:8080
